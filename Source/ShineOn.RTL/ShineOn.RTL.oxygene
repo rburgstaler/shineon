@@ -12,31 +12,22 @@
     <AssemblyDelaySign>False</AssemblyDelaySign>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DefineConstants>DEBUG;TRACE;MSWINDOWS</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;MSWINDOWS;LegacyStrIndexing</DefineConstants>
     <OutputPath>..\..\bin\</OutputPath>
     <GeneratePDB>True</GeneratePDB>
     <GenerateMDB>True</GenerateMDB>
     <WarnOnCaseMismatch>True</WarnOnCaseMismatch>
-    <SuppressWarnings>
-    </SuppressWarnings>
-    <EnableAsserts>True</EnableAsserts>
     <CodeFlowAnalysis>True</CodeFlowAnalysis>
     <CpuType>anycpu</CpuType>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <UseXmlDoc>False</UseXmlDoc>
     <XmlDocWarningLevel>WarningOnPublicMembers</XmlDocWarningLevel>
-    <XmlDocAllMembers>False</XmlDocAllMembers>
-    <Optimize>True</Optimize>
     <RunCodeAnalysis>False</RunCodeAnalysis>
-    <RequireExplicitLocalInitialization>False</RequireExplicitLocalInitialization>
-    <FutureHelperClassName>
-    </FutureHelperClassName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DefineConstants>MSWINDOWS</DefineConstants>
-    <OutputPath>..\bin</OutputPath>
+    <DefineConstants>MSWINDOWS;LegacyStrIndexing</DefineConstants>
+    <OutputPath>..\bin\</OutputPath>
     <EnableAsserts>False</EnableAsserts>
+    <XmlDocWarningLevel>WarningOnPublicMembers</XmlDocWarningLevel>
+    <CpuType>anycpu</CpuType>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib">
@@ -100,4 +91,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Oxygene\RemObjects.Oxygene.targets" />
+  <PropertyGroup>
+    <PreBuildEvent />
+  </PropertyGroup>
 </Project>
