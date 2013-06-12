@@ -412,6 +412,7 @@ type
   public
     constructor Create;
     constructor Create(AString: String);
+    procedure LoadFromStream(Stream: TStream);
     function Read(var Buffer: TBytes; Offset: LongInt; Count: LongInt): LongInt; override;
     function ReadString(Count: LongInt): String;
     function Seek(Offset: Int64; Origin: TSeekOrigin): Int64; override;
@@ -2199,6 +2200,17 @@ end;
 function TStringStream.GetDataString:String;
 begin
   Result := FStream.ToString;
+end;
+
+Procedure TStringStream.Loadfromstream(Stream: Tstream);
+var
+  pBytes: TBytes;
+begin
+  Size:=0;
+  pBytes := new TBytes(Stream.Size);
+  Stream.Seek(0, soFromBeginning);
+  Stream.Read(pBytes, Stream.Size);
+  FStream.Append(System.Text.Encoding.ASCII.GetString(pBytes));
 end;
 
 procedure TStringStream.SetSize(NewSize: Int64); 
