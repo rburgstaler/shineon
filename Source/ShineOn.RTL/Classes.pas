@@ -2230,10 +2230,10 @@ end;
 function TStringStream.Read(var Buffer: TBytes; Offset: LongInt; Count: LongInt): LongInt; 
 var 
   S:String;
-  b:array of Char;
+  b: array of Byte;
 begin
   S := ReadString(Count);
-  b := S.ToCharArray;
+  b := System.Text.Encoding.ASCII.GetBytes(S);
   &Array.Copy(b, Offset, Buffer, 0, Count);
   Result := b.Length;
 end;
@@ -2262,11 +2262,8 @@ begin
 end;
 
 function TStringStream.Write(const Buffer: TBytes; Offset: LongInt; Count: LongInt): LongInt; 
-var 
-  b: array of Char;
 begin
-  &Array.Copy(Buffer, Offset, b, 0, Count);
-  WriteString(b.ToString);
+  WriteString(System.Text.Encoding.ASCII.GetString(Buffer));
 end;
 
 procedure TStringStream.WriteString(AString: String);
