@@ -231,6 +231,7 @@ type
     class function StrToFloat(S: String; FormatSettings: TFormatSettings): Double;
     class function TryStrToFloat(S: String; out Value: Double; FormatSettings: TFormatSettings): Boolean;
     class function TryStrToFloat(S: String; out Value: Double; Provider: IFormatProvider): Boolean;
+    class function TryStrToFloat(S: String; out Value: Double): Boolean;
 
     class function Supports(Instance: IInterface; IID: TInterfaceRef): Boolean; 
     class function Supports(Instance: IInterface; IID: TInterfaceRef; out Intf): Boolean; 
@@ -309,6 +310,9 @@ function TryStrToInt(S: String; out Value: Integer): Boolean;public;
 function StrToInt64(S: String): Int64;public;
 function StrToInt64Def(S: String; Default: Int64): Int64;public;
 function TryStrToInt64(S: String; out Value: Int64): Boolean;public;
+function TryStrToFloat(S: String; out Value: Double; FormatSettings: TFormatSettings): Boolean; public;
+function TryStrToFloat(S: String; out Value: Double; Provider: IFormatProvider): Boolean; public;
+function TryStrToFloat(S: String; out Value: Double): Boolean; public;
 function StrToBool(S:String):Boolean;public;
 function BoolToStr(B: Boolean; UseBoolStrs: Boolean): String;public;
 function StrToDate(S:String):TDateTime;public;
@@ -1707,6 +1711,11 @@ begin
   Result := TryStrToFloat(S, Value, LFormat);
 end;
 
+class function SysUtils.TryStrToFloat(S: String; out Value: Double): Boolean;
+begin
+  Result := System.Double.TryParse(S, Value);
+end;
+
 class function SysUtils.StrToFloat(S: String; FormatSettings: TFormatSettings): Double;
 var
   Value: Double;
@@ -2011,6 +2020,21 @@ end;
 function TryStrToInt(S: String; out Value: Integer): Boolean;
 begin
   Result := ShineOn.Rtl.SysUtils.TryStrToInt(S, Value);
+end;
+
+function TryStrToFloat(S: String; out Value: Double; FormatSettings: TFormatSettings): Boolean;
+begin
+  Result:=ShineOn.Rtl.SysUtils.TryStrToFloat(S, Value, FormatSettings);
+end;
+
+function TryStrToFloat(S: String; out Value: Double; Provider: IFormatProvider): Boolean;
+begin
+  Result:=ShineOn.Rtl.SysUtils.TryStrToFloat(S, Value, Provider);
+end;
+
+function TryStrToFloat(S: String; out Value: Double): Boolean;
+begin
+  Result:=ShineOn.Rtl.SysUtils.TryStrToFloat(S, Value);
 end;
   
 function StrToInt64(S: String): Int64;
