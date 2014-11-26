@@ -229,6 +229,7 @@ type
 
     class function StrToFloat(S: String): Double;
     class function StrToFloat(S: String; FormatSettings: TFormatSettings): Double;
+    class function StrToFloatDef(S: String; Default: Double): Double;
     class function TryStrToFloat(S: String; out Value: Double; FormatSettings: TFormatSettings): Boolean;
     class function TryStrToFloat(S: String; out Value: Double; Provider: IFormatProvider): Boolean;
     class function TryStrToFloat(S: String; out Value: Double): Boolean;
@@ -379,6 +380,7 @@ function FloatToStrF(Value: Extended; AFormat: TFloatFormat; Precision, Digits: 
 function FloatToStrF(Value: Extended; AFormat: TFloatFormat; Precision, Digits: Integer; const FormatSettings: TFormatSettings ): String; public;
 
 function StrToFloat(S: String): Double; public;
+function StrToFloatDef(S: String; Default: Double): Double; public;
 
 implementation
 
@@ -1730,6 +1732,12 @@ begin
   Result:=Convert.ToDouble(S);
 end;
 
+class function SysUtils.StrToFloatDef(S: String; Default: Double): Double;
+begin
+  if not TryStrToFloat(S, Result) then
+    Result:=Default;
+end;
+
 // DELPHI COMPATIBLE GLOBAL METHODS
 
 function BytesOf(S: String): TBytes;
@@ -1750,6 +1758,11 @@ end;
 function StrToFloat(S: String): Double;
 begin
   Result:=ShineOn.Rtl.SysUtils.StrToFloat(S);
+end;
+
+function StrToFloatDef(S: String; Default: Double): Double;
+begin
+  Result:=ShineOn.Rtl.SysUtils.StrToFloatDef(S, Default);
 end;
 
 function FloatToStrF(Value: Extended; AFormat: TFloatFormat; Precision, Digits: Integer): String;
