@@ -56,6 +56,7 @@
     <Compile Include="AssemblyInfo.pas" />
     <Compile Include="Classes.pas" />
     <Compile Include="ClientDataSet.pas" />
+    <Compile Include="COMObj.pas" />
     <Compile Include="Consts.pas" />
     <Compile Include="Contnrs.pas" />
     <Compile Include="Dates\Date Functions (SysUtils).pas" />

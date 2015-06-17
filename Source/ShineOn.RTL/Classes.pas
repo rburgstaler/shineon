@@ -191,6 +191,7 @@ type
     FUpdateCount:Int32;
     FDelimiter, FQuoteChar:Char;
     FLineBreak: String;
+    fStrictDelimiter: boolean;
     function GetCommaText:String;
     procedure SetCommaText(Value:String);
     function GetName(Index:Integer):String;
@@ -255,6 +256,7 @@ type
     property Values[Name: String]: String read GetValue write SetValue;
     property Strings[Index: Integer]: String read Get write Put; default;
     property Text: String read GetTextStr write SetTextStr;
+    property StrictDelimiter: boolean read fStrictDelimiter write fStrictDelimiter;
     //property StringsAdapter: IStringsAdapter read FStringsAdapter write SetStringsAdapter;
   end;
   
