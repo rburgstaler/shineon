@@ -1303,18 +1303,33 @@ begin
       Add(Value);
       Exit;
     end;
-    iStart := 0;
-    iLength := FLineBreak.Length;
-    iPos := Value.IndexOf(FLineBreak);
-    while iPos > -1 do 
+    if FLineBreak=System.Environment.NewLine then
     begin
-      Add(Value.Substring(iStart, iPos - iStart));
-      iStart := iPos + iLength;
-      iPos := Value.IndexOf(FLineBreak, iStart);
+      iPos := 0;
+      while iPos<Value.Length do
+      begin
+        iStart := iPos;
+        while (iPos<Value.Length) and (not (Value[iPos] in [#13, #10])) do Inc(iPos);
+        Add(Value.Substring(iStart, iPos - iStart));
+        if (iPos<Value.Length) and (Value[iPos] = #13) then Inc(iPos);
+        if (iPos<Value.Length) and (Value[iPos] = #10) then Inc(iPos);
+      end;
+    end else
+    begin
+      iStart := 0;
+      iLength := FLineBreak.Length;
+      iPos := Value.IndexOf(FLineBreak);
+      while iPos > -1 do 
+      begin
+        Add(Value.Substring(iStart, iPos - iStart));
+        iStart := iPos + iLength;
+        iPos := Value.IndexOf(FLineBreak, iStart);
+      end;
+
+      //Account for case that there is no FLineBreak after the last string
+      if iStart < Value.Length then
+        Add(Value.Substring(iStart, Value.Length - iStart));
     end;
-    //Account for case that there is no FLineBreak after the last string
-    if iStart < Value.Length then
-      Add(Value.Substring(iStart, Value.Length - iStart));
   finally
     EndUpdate;
   end;
