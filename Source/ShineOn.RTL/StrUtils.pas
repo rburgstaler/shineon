@@ -25,6 +25,7 @@ type
     class method IfThen(AValue: Boolean; const ATrue: String; AFalse: String := ''): String; 
     class method AnsiStartsStr(const ASubText, AText: String): Boolean; 
     class method AnsiEndsStr(const ASubText, AText: String): Boolean;
+    class method MatchText( const aText: string; const aValues: array of string ): boolean;
   end;
 
 
@@ -43,10 +44,28 @@ method AnsiStartsText(const ASubText, AText: String): Boolean; public;
 method IfThen(AValue: Boolean; const ATrue: String; AFalse: String := ''): String; public;
 method AnsiStartsStr(const ASubText, AText: String): Boolean; public;
 method AnsiEndsStr(const ASubText, AText: String): Boolean; public;
+method MatchText( const aText: string; const aValues: array of string ): boolean; public;
 
 implementation
 
 { StrUtils }
+
+class method StrUtils.MatchText( const aText: string; const aValues: array of string ): boolean;
+var
+  i: integer;
+
+begin
+  result := False;
+
+  for i := 0 to Length( aValues ) - 1 do
+  begin
+    if( SameText( aText, aValues[i] ) )then
+    begin
+      result := True;
+      Break;
+    end;//end if
+  end;//end for i
+end;
 
 class method StrUtils.LeftStr(aStr: String; aCount: Integer): String;
 begin
@@ -151,6 +170,11 @@ begin
 end;
 
 // Standalone versions
+
+method MatchText( const aText: string; const aValues: array of string ): boolean;
+begin
+  result := StrUtils.MatchText( aText, aValues );
+end;
 
 method SplitString(const S, Delimiters: string): TStringDynArray;
 begin
