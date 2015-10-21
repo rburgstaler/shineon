@@ -86,9 +86,9 @@ type
     class const ssDouble = TShiftState.Double;
     class const htKeyword = THelpType.Keyword;
     class const htContext = THelpType.Context;
-    class const dupIgnore = TDuplicates.Ignore;
-    class const dupAccept = TDuplicates.Accept;
-    class const dupError = TDuplicates.Error;
+    class const dupIgnore = TDuplicates.dupIgnore;
+    class const dupAccept = TDuplicates.dupAccept;
+    class const dupError = TDuplicates.dupError;
     class const tlbsLF = TTextLineBreakStyle.LF;
     class const tlbsCRLF = TTextLineBreakStyle.CRLF;
     class const rfReplaceAll = TReplaceFlag.rfReplaceAll;

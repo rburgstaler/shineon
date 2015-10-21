@@ -137,7 +137,7 @@ type
 
 { Duplicate management }
 
-  TDuplicates = public enum(Ignore, Accept, Error);
+  TDuplicates = public enum(dupIgnore, dupAccept, dupError);
   
 
 type

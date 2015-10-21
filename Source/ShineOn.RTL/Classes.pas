@@ -893,9 +893,9 @@ procedure TThreadList.Add(Item: Object);
 begin
   LockList;
   try
-    if (Duplicates = TDuplicates.Accept) or (FList.IndexOf(Item) < 0) then
+    if (Duplicates = TDuplicates.dupAccept) or (FList.IndexOf(Item) < 0) then
       FList.Add(Item)
-    else if Duplicates = TDuplicates.Error then
+    else if Duplicates = TDuplicates.dupError then
       FList.Error(SDuplicateItem, Integer(Item));
   finally
     UnlockList;
@@ -1740,7 +1740,7 @@ begin
       if iCompare = 0 then
       begin
         Result := True;
-        if Duplicates <> Duplicates.Accept then
+        if Duplicates <> Duplicates.dupAccept then
           iLeft := iCurrent;
       end;
     end;
