@@ -47,7 +47,20 @@ type
   TWideStringDynArray   = public array of WideString;
 
   TPoint = public System.Drawing.Point;
-  TRect = public System.Drawing.Rectangle; 
+  TRect = public record
+  private
+    function GetWidth: Integer;
+    procedure SetWidth(const Value: Integer);
+    function GetHeight: Integer;
+    procedure SetHeight(const Value: Integer);  
+  public
+    Left, Top, Right, Bottom: LongInt;
+    // changing the width is always relative to Left;
+    property Width: Integer read GetWidth write SetWidth;
+    // changing the Height is always relative to Top
+    property Height: Integer read GetHeight write SetHeight;
+  end; 
+
   TSize = public System.Drawing.Size;
   TSmallPoint = public System.Drawing.Point;
 
@@ -171,12 +184,20 @@ end;
 
 function Rect(Left, Top, Right, Bottom: Integer): TRect;
 begin
-  Result := new TRect(Left,Top,Right - Left,Bottom - Top);
+  Result := new TRect();
+  Result.Left := Left;
+  Result.Top := Top;
+  Result.Right := Right;
+  Result.Bottom := Bottom;
 end;
 
 function Bounds(ALeft, ATop, AWidth, AHeight: Integer): TRect;
 begin
-  Result := new TRect(ALeft,ATop,AWidth,AHeight);
+  Result := new TRect();
+  Result.Left := ALeft;
+  Result.Top := ATop;
+  Result.Width := AWidth;
+  Result.Height := AHeight;
 end;
 
 function Point(X, Y: Integer): TPoint;
@@ -203,14 +224,14 @@ function IntersectRect(out aRect: TRect; const R1, R2: TRect): Boolean;
 begin
   aRect := R1;
 
-  if R2.Left > R1.Left then aRect.X := R2.X;
-  if R2.Top > R1.Top then aRect.Y := R2.Y;
+  if R2.Left > R1.Left then aRect.Left := R2.Left;
+  if R2.Top > R1.Top then aRect.Top := R2.Top;
   if R2.Right < R1.Right then aRect.Width := (R2.Right - R2.Left);
   if R2.Bottom < R1.Bottom then aRect.Height := (R2.Bottom - R2.Top);
 
   Result := not IsRectEmpty(aRect);
 
-  if not Result then aRect := new TRect(0,0,0,0);
+  if not Result then aRect := Rect(0,0,0,0);
 end;
 
 function UnionRect(out aRect: TRect; const R1, R2: TRect): Boolean;
@@ -219,15 +240,15 @@ begin
 
   if not IsRectEmpty(R2) then
     begin
-      if R2.Left < R1.Left then aRect.X := R2.X;
-      if R2.Top < R1.Top then aRect.Y := R2.Y;
+      if R2.Left < R1.Left then aRect.Left := R2.Left;
+      if R2.Top < R1.Top then aRect.Top := R2.Top;
       if R2.Right > R1.Right then aRect.Width := (R2.Right - R2.Left);
       if R2.Bottom > R1.Bottom then aRect.Height := (R2.Bottom - R2.Top);
     end;
 
   Result := not IsRectEmpty(aRect);
 
-  if not Result then aRect := new TRect(0,0,0,0);
+  if not Result then aRect := Rect(0,0,0,0);
 end;
 
 function IsRectEmpty(const aRect: TRect): Boolean;
@@ -239,9 +260,9 @@ function OffsetRect(var aRect: TRect; DX: Integer; DY: Integer): Boolean;
 begin
   if aRect <> nil then
     begin
-      aRect.X := aRect.X + DX;
+      aRect.Left := aRect.Left + DX;
       aRect.Width := aRect.Right + DX;
-      aRect.Y := aRect.Y + DY;
+      aRect.Top := aRect.Top + DY;
       aRect.Height := aRect.Bottom + DY;
 
       Result := True;
@@ -257,6 +278,26 @@ begin
       Result.X := (Right - Left) div 2 + Left;
       Result.Y := (Bottom - Top) div 2 + Top;
     end;
+end;
+
+procedure TRect.SetWidth(const Value: Integer);
+begin
+  Self.Right := Self.Left + Value;
+end;
+
+function TRect.GetWidth: Integer;
+begin
+  Result := Self.Right - Self.Left;
+end;
+
+procedure TRect.SetHeight(const Value: Integer);
+begin
+  Self.Bottom := Self.Top + Value;
+end;
+
+function TRect.GetHeight: Integer;
+begin
+  Result := Self.Bottom - Self.Top;
 end;
 
 end.
