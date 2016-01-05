@@ -53,8 +53,22 @@ type
     [Extension]class function GetBufferEncoding(ABuffer: TBytes; var AEncoding: TEncoding): Integer;
   end;
 
+// Generic Anonymous method declarations
 type
+  TProc = public procedure;
+  TProc<T> = public procedure (Arg1: T);
+  TProc<T1,T2> = public procedure (Arg1: T1; Arg2: T2);
+  TProc<T1,T2,T3> = public procedure (Arg1: T1; Arg2: T2; Arg3: T3);
+  TProc<T1,T2,T3,T4> = public procedure (Arg1: T1; Arg2: T2; Arg3: T3; Arg4: T4);type
   TBytes = public array of Byte;
+
+  TFunc<TResult> = public function: TResult;
+  TFunc<T,TResult> = public function (Arg1: T): TResult;
+  TFunc<T1,T2,TResult> = public function (Arg1: T1; Arg2: T2): TResult;
+  TFunc<T1,T2,T3,TResult> = public function (Arg1: T1; Arg2: T2; Arg3: T3): TResult;
+  TFunc<T1,T2,T3,T4,TResult> = public function (Arg1: T1; Arg2: T2; Arg3: T3; Arg4: T4): TResult;
+
+  TPredicate<T> = public function (Arg1: T): Boolean;
 
 type
   TInterfaceRef = &Type;
