@@ -27,6 +27,15 @@ type
     class method Min(A, B: Int64): Integer; 
     class method SameValue(A, B, Epsilon: Double): Boolean;
 
+    //Ceil: Smallest integer >= X, |X| < MaxInt }
+    class method Ceil(const X: Single): Integer;
+    class method Ceil(const X: Double): Integer;
+    //method Ceil(const X: Extended): Integer;  Same as double
+
+    { Floor: Largest integer <= X,  |X| < MaxInt }
+    class method Floor(const X: Single): Integer;
+    class method Floor(const X: Double): Integer;
+    //method Floor(const X: Extended): Integer;  Same as double
 
     class method IsNan(const AValue: Double): Boolean;
 
@@ -71,7 +80,15 @@ method CompareValue(A, B: Int32): TValueRelationship; public;
 method CompareValue(A, B: Int64): TValueRelationship; public;
 method RoundTo(const AValue: Double; const ADigit: TRoundToEXRangeExtended): Double; public;
 method RoundTo(const AValue: Decimal; const ADigit: TRoundToEXRangeExtended): Decimal; public;
+{ Ceil: Smallest integer >= X, |X| < MaxInt }
+method Ceil(const X: Single): Integer;
+method Ceil(const X: Double): Integer;
+//method Ceil(const X: Extended): Integer;  Same as double
 
+{ Floor: Largest integer <= X,  |X| < MaxInt }
+method Floor(const X: Single): Integer;
+method Floor(const X: Double): Integer;
+//method Floor(const X: Extended): Integer;  Same as double
 
 implementation
 
@@ -264,6 +281,34 @@ begin
   Result := TempVal * Scaler;
 end;
 
+class method MathUnit.Ceil(const X: Single): Integer;
+begin
+  Result := Integer(Trunc(X));
+  if Frac(X) > 0 then
+    Inc(Result);
+end;
+
+class method MathUnit.Ceil(const X: Double): Integer;
+begin
+  Result := Integer(Trunc(X));
+  if Frac(X) > 0 then
+    Inc(Result);
+end;
+
+class method MathUnit.Floor(const X: Single): Integer;
+begin
+  Result := Integer(Trunc(X));
+  if Frac(X) < 0 then
+    Dec(Result);
+end;
+
+class method MathUnit.Floor(const X: Double): Integer;
+begin
+  Result := Integer(Trunc(X));
+  if Frac(X) < 0 then
+    Dec(Result);
+end;
+
 method RoundTo(const AValue: Double; const ADigit: TRoundToEXRangeExtended): Double;
 begin
   Result:=MathUnit.RoundTo(AValue, ADigit);
@@ -368,6 +413,26 @@ end;
 method CompareValue(A, B: Int64): TValueRelationship; 
 begin
   Result:=MathUnit.CompareValue(A,B);
+end;
+
+method Ceil(const X: Single): Integer;
+begin
+  Result := MathUnit.Ceil(X);
+end;
+
+method Ceil(const X: Double): Integer;
+begin
+  Result := MathUnit.Ceil(X);
+end;
+
+method Floor(const X: Single): Integer;
+begin
+  Result := MathUnit.Floor(X);
+end;
+
+method Floor(const X: Double): Integer;
+begin
+  Result := MathUnit.Floor(X);
 end;
 
 end.
