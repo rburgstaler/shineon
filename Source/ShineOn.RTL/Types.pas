@@ -55,6 +55,7 @@ type
     procedure SetHeight(const Value: Integer);  
   public
     Left, Top, Right, Bottom: LongInt;
+    class function Empty: TRect;
     // changing the width is always relative to Left;
     property Width: Integer read GetWidth write SetWidth;
     // changing the Height is always relative to Top
@@ -298,6 +299,14 @@ end;
 function TRect.GetHeight: Integer;
 begin
   Result := Self.Bottom - Self.Top;
+end;
+
+class function TRect.Empty: TRect;
+begin
+  Result.Left := 0;
+  Result.Top := 0;
+  Result.Right := 0;
+  Result.Bottom := 0;
 end;
 
 end.
