@@ -26,6 +26,8 @@ type
     class method AnsiStartsStr(const ASubText, AText: String): Boolean; 
     class method AnsiEndsStr(const ASubText, AText: String): Boolean;
     class method MatchText( const aText: string; const aValues: array of string ): boolean;
+    class method StartsStr(const ASubText, AText: String): Boolean; 
+    class method EndsStr(const ASubText, AText: String): Boolean;
   end;
 
 
@@ -45,6 +47,8 @@ method IfThen(AValue: Boolean; const ATrue: String; AFalse: String := ''): Strin
 method AnsiStartsStr(const ASubText, AText: String): Boolean; public;
 method AnsiEndsStr(const ASubText, AText: String): Boolean; public;
 method MatchText( const aText: string; const aValues: array of string ): boolean; public;
+method StartsStr(const ASubText, AText: String): Boolean; public;
+method EndsStr(const ASubText, AText: String): Boolean; public;
 
 implementation
 
@@ -169,6 +173,16 @@ begin
   Result:=S.Split([Delimiters], StringSplitOptions.None);
 end;
 
+class method StrUtils.StartsStr(const ASubText, AText: String): Boolean;
+begin
+  Result:=AText.StartsWith(ASubText, StringComparison.CurrentCulture);
+end;
+
+class method StrUtils.EndsStr(const ASubText, AText: String): Boolean;
+begin
+  Result:=AText.EndsWith(ASubText, StringComparison.CurrentCulture);
+end;
+
 // Standalone versions
 
 method MatchText( const aText: string; const aValues: array of string ): boolean;
@@ -249,6 +263,16 @@ end;
 method AnsiEndsStr(const ASubText, AText: string): Boolean;
 begin
   result:=StrUtils.AnsiEndsStr(ASubText, AText);
+end;
+
+method StartsStr(const ASubText, AText: string): Boolean; 
+begin
+  result:=StrUtils.StartsStr(ASubText, AText);
+end;
+
+method EndsStr(const ASubText, AText: string): Boolean;
+begin
+  result:=StrUtils.EndsStr(ASubText, AText);
 end;
 
 end.
