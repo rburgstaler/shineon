@@ -365,6 +365,8 @@ type
     constructor Create(FileName: String; Mode: Word); 
     constructor Create(FileName: String; Mode: Word; Rights: Cardinal); 
   end;
+
+  TBufferedFileStream = public class(TFileStream);
   
   TCustomMemoryStream = public abstract class(TStream)
   private
