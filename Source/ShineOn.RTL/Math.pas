@@ -42,6 +42,7 @@ type
     class method NaN: Double;
     class method Sign(const AValue: Double): Integer;
 
+    class method Infinity: Double;
 
     { Trigonometric functions }
     class method ArcCos(const X : Double) : Double; 
@@ -62,6 +63,7 @@ type
 method IsZero(const A: Double; Epsilon: Double := 0): Boolean; public;
 method IsNan(const AValue: Double): Boolean; public; 
 method NaN: Double; public;
+method Infinity: Double; public;
 method Max(A, B: Double): Double; public; 
 method Max(A, B: Int32): Integer; public; 
 method Max(A, B: Int64): Integer; public; 
@@ -245,6 +247,11 @@ begin
   Result:=Double.NaN;
 end;
 
+class method MathUnit.Infinity: Double;
+begin
+  Result:=Double.PositiveInfinity;
+end;
+
 class method MathUnit.Sign(const AValue: Double): Integer;
 begin
   Result:=Math.Sign(AValue);
@@ -332,6 +339,11 @@ end;
 method NaN: Double;
 begin
   Result:=MathUnit.NaN;
+end;
+
+method Infinity: Double;
+begin
+  Result:=MathUnit.Infinity;
 end;
 
 method Max(A, B: Double): Double;
