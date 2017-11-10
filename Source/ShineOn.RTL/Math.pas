@@ -38,6 +38,7 @@ type
     //method Floor(const X: Extended): Integer;  Same as double
 
     class method IsNan(const AValue: Double): Boolean;
+    class method IsInfinite(const AValue: Double): Boolean;
 
     class method NaN: Double;
     class method Sign(const AValue: Double): Integer;
@@ -62,6 +63,7 @@ type
 
 method IsZero(const A: Double; Epsilon: Double := 0): Boolean; public;
 method IsNan(const AValue: Double): Boolean; public; 
+method IsInfinite(const AValue: Double): Boolean; public; 
 method NaN: Double; public;
 method Infinity: Double; public;
 method Max(A, B: Double): Double; public; 
@@ -242,6 +244,11 @@ begin
   Result:=Double.IsNan(AValue);
 end;
 
+class method MathUnit.IsInfinite(const AValue: Double): Boolean; 
+begin
+  Result:=Double.IsInfinity(AValue);
+end;
+
 class method MathUnit.NaN: Double;
 begin
   Result:=Double.NaN;
@@ -334,6 +341,11 @@ end;
 method IsNan(const AValue: Double): Boolean; 
 begin
   Result:=MathUnit.IsNan(AValue);
+end;
+
+method IsInfinite(const AValue: Double): Boolean; 
+begin
+  Result:=MathUnit.IsInfinite(AValue);
 end;
 
 method NaN: Double;
